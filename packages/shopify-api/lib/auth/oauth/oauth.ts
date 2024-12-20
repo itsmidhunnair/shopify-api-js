@@ -111,17 +111,18 @@ export function begin(config: ConfigInterface): OAuthBegin {
 
     const cleanShop = sanitizeShop(config)(shop, true)!;
     const redirectUrl = `https://${cleanShop}/admin/oauth/authorize${processedQuery.stringify()}`;
-    response.statusCode = 302;
-    response.statusText = 'Found';
-    response.headers = {
-      ...response.headers,
-      ...cookies.response.headers!,
-      Location: redirectUrl,
-    };
+    return {redirectUrl, headers: {...response.headers, ...cookies.response.headers}}
+    // response.statusCode = 302;
+    // response.statusText = 'Found';
+    // response.headers = {
+    //   ...response.headers,
+    //   ...cookies.response.headers!,
+    //   Location: redirectUrl,
+    // };
 
-    log.debug(`OAuth started, redirecting to ${redirectUrl}`, {shop, isOnline});
+    // log.debug(`OAuth started, redirecting to ${redirectUrl}`, {shop, isOnline});
 
-    return abstractConvertResponse(response, adapterArgs);
+    // return abstractConvertResponse(response, adapterArgs);
   };
 }
 
